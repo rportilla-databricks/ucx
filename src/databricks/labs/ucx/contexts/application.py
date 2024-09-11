@@ -463,6 +463,10 @@ class GlobalContext(abc.ABC):
             self.data_comparator,
             self.config.recon_tolerance_percent,
         )
+    
+    @cached_property
+    def assessment_exporter(self):
+        return AssessmentExporter(self.sql_backend, self.config)
 
 
 class CliContext(GlobalContext, abc.ABC):
