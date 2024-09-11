@@ -19,7 +19,7 @@ from databricks.labs.ucx.hive_metastore.tables import What
 from databricks.labs.ucx.install import AccountInstaller
 from databricks.labs.ucx.source_code.linters.files import LocalCodeLinter
 
-from databricks.labs.ucx.assessment.export import AssessmentExport
+from databricks.labs.ucx.assessment.export import AssessmentExporter
 
 ucx = App(__file__)
 logger = get_logger(__file__)
@@ -643,8 +643,7 @@ def lint_local_code(
 def export_assessment(w: WorkspaceClient, prompts: Prompts):
     """Export the UCX assessment queries to a zip file."""
     ctx: WorkspaceContext = WorkspaceContext(w)
-    export: AssessmentExport = AssessmentExport(ctx.sql_backend, ctx.config)
-
+    exporter = ctx.assessment_exporter
     export.export_results(prompts)
 
 
