@@ -112,8 +112,7 @@ main(f'--config=/Workspace{config_file}',
      f'--parent_run_id=' + dbutils.widgets.get('parent_run_id'))
 """
 
-EXPORT_TO_EXCEL_NOTEBOOK = """
-# Databricks notebook source
+EXPORT_TO_EXCEL_NOTEBOOK = """# Databricks notebook source
 # MAGIC %md
 # MAGIC ##### Exporter of UCX assessment results
 # MAGIC ##### Instructions:
@@ -165,7 +164,7 @@ lock = Lock()
 
 # DBTITLE 1,Assessment Export
 FILE_NAME = "ucx_assessment_main.xlsx"
-TMP_PATH = f"/Workspace{ctx.installation.install_folder()}/tmp/"
+TMP_PATH = f"/Workspace{{ctx.installation.install_folder()}}/tmp/"
 DOWNLOAD_PATH = "/dbfs/FileStore/excel-export"
 
 
@@ -597,6 +596,8 @@ class WorkflowsDeployment(InstallationMixin):
         self.remove_jobs(keep=desired_workflows)
         self._install_state.save()
         self._create_debug(remote_wheels)
+        self._create_export(remote_wheels)
+
         self._create_readme()
 
     def remove_jobs(self, *, keep: set[str] | None = None) -> None:
